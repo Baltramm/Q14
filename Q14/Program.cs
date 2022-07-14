@@ -9,40 +9,41 @@ namespace Q14
 
         static void Main(string[] args)
         {
-            // Добавим Россию с её городами
-            var russianCities = new List<City>();
-            russianCities.Add(new City("Москва", 11900000));
-            russianCities.Add(new City("Санкт-Петербург", 4991000));
-            russianCities.Add(new City("Волгоград", 1099000));
-            russianCities.Add(new City("Казань", 1169000));
-            russianCities.Add(new City("Севастополь", 449138));
-
-
-            var bigCities = from russianCity in russianCities
-                            where russianCity.Population > 1000000
-                            orderby russianCity.Population descending
-                            select russianCity;
-
-            foreach (var bigCity in bigCities)
-                Console.WriteLine(bigCity.Name + " - " + bigCity.Population);
-
-
-            var bigCitiess = russianCities.Where(c => c.Population > 1000000)
-  .OrderByDescending(c => c.Population);
-            var tenCities = from tenCitiess in russianCities where tenCitiess.Name.Length <= 10 orderby tenCitiess.Name.Length select tenCitiess;
-        }
-
-        // Создадим модель класс для города
-        public class City
-        {
-            public City(string name, long population)
+            // Наш список студентов
+            List<Student> students = new List<Student>
             {
-                Name = name;
-                Population = population;
-            }
+               new Student {Name="Андрей", Age=23, Languages = new List<string> {"английский", "немецкий" }},
+               new Student {Name="Сергей", Age=27, Languages = new List<string> {"английский", "французский" }},
+               new Student {Name="Дмитрий", Age=29, Languages = new List<string> {"английский", "испанский" }},
+               new Student {Name="Василий", Age=24, Languages = new List<string> {"испанский", "немецкий" }}
+            };
+            var stunentApp = from s in students
+                             let fullAge = 2022 - s.Age
+                             where s.Age < 27
+                             select new Application
+                             {
+                                 Name = s.Name,
+                                 YearOfBirth = fullAge
 
-            public string Name { get; set; }
-            public long Population { get; set; }
+                             };
         }
+
+
+
+
+        public class Application
+
+        {
+            public string Name { get; set; }
+            public int YearOfBirth { get; set; }
+        }
+        public class Student
+        {
+            public string Name { get; set; }
+            public int Age { get; set; }
+            public List<string> Languages { get; set; }
+        }
+
+
     }
 }
